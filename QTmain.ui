@@ -472,26 +472,6 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="lineEdit_S">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_D">
-    <property name="geometry">
-     <rect>
-      <x>232</x>
-      <y>40</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -521,9 +501,9 @@
    <widget class="QPushButton" name="button_find_maoa">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>580</y>
-      <width>291</width>
+      <x>40</x>
+      <y>490</y>
+      <width>361</width>
       <height>81</height>
      </rect>
     </property>
@@ -537,36 +517,14 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>80</y>
+      <x>150</x>
+      <y>90</y>
       <width>111</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Масштаб:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="scale">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>110</y>
-      <width>361</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>361</width>
-      <height>31</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>361</width>
-      <height>31</height>
-     </size>
     </property>
    </widget>
    <widget class="QLabel" name="errors">
@@ -649,6 +607,88 @@
     </property>
     <property name="text">
      <string>Почтовый индекс</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="spin_S">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>5</number>
+    </property>
+    <property name="minimum">
+     <double>-90.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>90.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.010000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="spin_D">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>50</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>5</number>
+    </property>
+    <property name="minimum">
+     <double>-180.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>180.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.010000000000000</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::DefaultStepType</enum>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="scale">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>130</y>
+      <width>351</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>0</number>
+    </property>
+    <property name="minimum">
+     <double>1.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>17.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>590</y>
+      <width>361</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 103, 103);</string>
+    </property>
+    <property name="text">
+     <string>Сброс поискового запроса</string>
     </property>
    </widget>
   </widget>
