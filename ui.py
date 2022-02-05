@@ -208,6 +208,7 @@ class Ui_MapQT(object):
         self.horizontalLayout.addWidget(self.Sputnik)
         self.Sxema = QtWidgets.QRadioButton(self.horizontalLayoutWidget)
         self.Sxema.setObjectName("Sxema")
+        self.Sxema.click()
         self.horizontalLayout.addWidget(self.Sxema)
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
         self.checkBox.setGeometry(QtCore.QRect(100, 300, 251, 51))
