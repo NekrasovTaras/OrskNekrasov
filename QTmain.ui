@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
+    <width>1280</width>
     <height>739</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>739</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -465,6 +471,9 @@
     <bold>true</bold>
    </font>
   </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>Map</string>
   </property>
@@ -498,11 +507,11 @@
      <string>Долгота:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_find_maoa">
+   <widget class="QPushButton" name="button_find">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>490</y>
+      <y>550</y>
       <width>361</width>
       <height>81</height>
      </rect>
@@ -553,9 +562,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>0</x>
       <y>380</y>
-      <width>391</width>
+      <width>441</width>
       <height>31</height>
      </rect>
     </property>
@@ -566,29 +575,29 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>29</x>
       <y>190</y>
-      <width>410</width>
+      <width>371</width>
       <height>51</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QRadioButton" name="Gibrid">
+      <widget class="QRadioButton" name="gibrid_button">
        <property name="text">
         <string>Гибрид</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="Sputnik">
+      <widget class="QRadioButton" name="sputnik_button">
        <property name="text">
         <string>Спутник</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="Sxema">
+      <widget class="QRadioButton" name="shema_button">
        <property name="text">
         <string>Схема</string>
        </property>
@@ -619,7 +628,7 @@
      </rect>
     </property>
     <property name="decimals">
-     <number>5</number>
+     <number>6</number>
     </property>
     <property name="minimum">
      <double>-90.000000000000000</double>
@@ -641,7 +650,7 @@
      </rect>
     </property>
     <property name="decimals">
-     <number>5</number>
+     <number>6</number>
     </property>
     <property name="minimum">
      <double>-180.000000000000000</double>
@@ -656,7 +665,7 @@
      <enum>QAbstractSpinBox::DefaultStepType</enum>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="scale">
+   <widget class="QDoubleSpinBox" name="scale_sipin_box">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -675,11 +684,11 @@
      <double>17.000000000000000</double>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="reset_button">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>590</y>
+      <y>640</y>
       <width>361</width>
       <height>81</height>
      </rect>
@@ -689,6 +698,39 @@
     </property>
     <property name="text">
      <string>Сброс поискового запроса</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="photo_label">
+    <property name="geometry">
+     <rect>
+      <x>526</x>
+      <y>12</y>
+      <width>741</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_find_object">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>460</y>
+      <width>361</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>26</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Найти объект</string>
     </property>
    </widget>
   </widget>
