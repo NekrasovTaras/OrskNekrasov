@@ -34,7 +34,7 @@ class Main_Window(QMainWindow):
                 f"https://static-maps.yandex.ru/1.x/?ll={f'{self.coordinates[0]},{self.coordinates[1]}'}&spn={f'{self.spn[0]},{self.spn[1]}'}&l=sat,skl&size=650,450"
         self.map_image(ya_statick)
 
-    def sputnik_on(self):
+    def gibrid_on(self):
         self.map_type.append("sputnik_on")
         if self.mark_on:
             ya_statick = \
