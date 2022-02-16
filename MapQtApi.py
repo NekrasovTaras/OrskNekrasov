@@ -132,7 +132,8 @@ class Main_Window(QMainWindow):
             self.checked()
 
     def reset(self):
-        pass
+        self.mark_on = False
+        self.checked()
 
 
 def error_window(text):
