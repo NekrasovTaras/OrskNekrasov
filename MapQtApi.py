@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import requests
 import os
-from Samples.geocoder import get_ll_span
+from Samples.geocoder import get_ll_span, get_nearest_object
 
 
 class Main_Window(QMainWindow):
@@ -18,6 +18,7 @@ class Main_Window(QMainWindow):
         self.shema_button.clicked.connect(self.shema_on)
         self.reset_button.clicked.connect(self.reset)
         self.button_find_object.clicked.connect(self.mark_image)
+        self.postal_code_button.clicked.connect(self.postal_code_click)
         self.spn = [0.3, 0.3]
         self.coordinates = [37.617644, 55.755819]
         self.map_type = []
@@ -83,22 +84,27 @@ class Main_Window(QMainWindow):
             self.coordinates = ll.split(",")
             self.coordinates[0] = float(self.coordinates[0])
             self.coordinates[1] = float(self.coordinates[1])
-            map_request = f"http://static-maps.yandex.ru/1.x/?{ll_spn}&l={map_type}"
+            map_request = f"http://static-maps.yandex.ru/1.x/?{ll_spn}&l={map_type}&&size=650,450"
             map_request += "&" + self.point_param
             response = requests.get(map_request)
-            if not response:
-                print("Ошибка выполнения запроса:")
-                print(map_request)
-                print("Http статус:", response.status_code, "(", response.reason, ")")
-                sys.exit(1)
             map_file = 'map.png'
             with open(map_file, "wb") as file:
                 file.write(response.content)
+            self.adress = get_nearest_object(self.coordinates, kind="house")
+            self.postal_code_click()
             pixmap = QPixmap(map_file)
             self.photo_label.setPixmap(pixmap)
+
         except Exception:
             error_window('Неправильный формат данных')
             self.reset()
+
+    def postal_code_click(self):
+        if self.mark_on:
+            if self.postal_code_button.isChecked():
+                self.adress_label.setText(self.adress["formatted"] + ", " + self.adress["postal_code"])
+            else:
+                self.adress_label.setText(self.adress["formatted"])
 
     def checked(self):
         if self.map_type[-1] == "gibrid_on":
@@ -133,6 +139,7 @@ class Main_Window(QMainWindow):
 
     def reset(self):
         self.mark_on = False
+        self.adress_label.setText("")
         self.checked()
 
 
