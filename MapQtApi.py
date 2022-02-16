@@ -20,31 +20,23 @@ class Main_Window(QMainWindow):
         self.button_find_object.clicked.connect(self.mark_image)
         self.spn = [0.3, 0.3]
         self.coordinates = [37.617644, 55.755819]
-
-    def receiving_data(self):
-        try:
-            self.width = float(self.spin_S.value())
-            self.longitude = float(self.spin_D.value())
-            self.scale_user = int(self.scale_sipin_box.value())
-            self.map_is_visible = True
-        except Exception:
-            error_window('Неправильный формат данных')
-            return
-        self.click_tracking()
-        self.place.setEnabled(False)
-        self.button_find.setEnabled(False)
+        self.map_type = []
+        self.shema_on()
 
     def gibrid_on(self):
+        self.map_type.append("gibrid_on")
         ya_statick = \
             f"https://static-maps.yandex.ru/1.x/?ll={f'{self.coordinates[0]},{self.coordinates[1]}'}&spn={f'{self.spn[0]},{self.spn[1]}'}&l=sat,skl&size=650,450"
         self.map_image(ya_statick)
 
     def sputnik_on(self):
+        self.map_type.append("sputnik_on")
         ya_statick = \
             f"https://static-maps.yandex.ru/1.x/?ll={f'{self.coordinates[0]},{self.coordinates[1]}'}&spn={f'{self.spn[0]},{self.spn[1]}'}&l=sat&size=650,450"
         self.map_image(ya_statick)
 
     def shema_on(self):
+        self.map_type.append("shema_on")
         ya_statick = \
             f"https://static-maps.yandex.ru/1.x/?ll={f'{self.coordinates[0]},{self.coordinates[1]}'}&spn={f'{self.spn[0]},{self.spn[1]}'}&l=map&size=650,450"
         self.map_image(ya_statick)
@@ -56,6 +48,7 @@ class Main_Window(QMainWindow):
             file.write(response.content)
         pixmap = QPixmap(map_file)
         self.photo_label.setPixmap(pixmap)
+        os.remove(map_file)
 
     def mark_image(self):
         try:
@@ -81,50 +74,39 @@ class Main_Window(QMainWindow):
             error_window('Неправильный формат данных')
             self.reset()
 
+    def checked(self):
+        if self.map_type[-1] == "gibrid_on":
+            self.gibrid_on()
+        elif self.map_type[-1] == "shema_on":
+            self.shema_on()
+        else:
+            self.sputnik_on()
+
     def keyPressEvent(self, event):
-        key = event.text()
+        key = event.key()
         if key == Qt.Key_PageUp:
-            print(1)
-            if self.scale_user + 1 <= 17:
-                self.scale_user += 1
-                self.map_image()
-        elif event.scan_code == 81:
-            if self.scale_user - 1 >= 1:
-                self.scale_user -= 1
-                self.map_image()
-        elif event.scan_code == 72:
-            if self.longitude + 10 / self.scale_user ** 2 <= 90:
-                self.longitude += 10 / self.scale_user ** 2
-                self.map_image()
-        elif event.scan_code == 80:
-            if self.longitude - 10 / self.scale_user ** 2 >= -90:
-                self.longitude -= 10 / self.scale_user ** 2
-                self.map_image()
-        elif event.scan_code == 75:
-            if self.width - 10 / self.scale_user ** 2 >= -180:
-                self.width -= 10 / self.scale_user ** 2
-                self.map_image()
-        elif event.scan_code == 77:
-            if self.width + 10 / self.scale_user ** 2 <= 180:
-                self.width += 10 / self.scale_user ** 2
-                self.map_image()
+            self.spn[0] = self.spn[0] / 2
+            self.spn[1] = self.spn[1] / 2
+            self.checked()
+        elif key == Qt.Key_PageDown:
+            self.spn[0] = self.spn[0] * 2
+            self.spn[1] = self.spn[1] * 2
+            self.checked()
+        elif key == Qt.Key_Left:
+            self.coordinates[0] -= self.spn[0] + self.spn[1]
+            self.checked()
+        elif key == Qt.Key_Right:
+            self.coordinates[0] += self.spn[0] + self.spn[1]
+            self.checked()
+        elif key == Qt.Key_Up:
+            self.coordinates[1] += self.spn[0] + self.spn[1]
+            self.checked()
+        elif key == Qt.Key_Down:
+            self.coordinates[1] -= self.spn[0] + self.spn[1]
+            self.checked()
 
     def reset(self):
-        self.spin_S.setEnabled(True)
-        self.spin_S.setValue(0)
-        self.spin_D.setEnabled(True)
-        self.spin_D.setValue(0)
-        self.place.setEnabled(True)
-        self.place.setText("")
-        self.scale_sipin_box.setEnabled(True)
-        self.scale_sipin_box.setValue(1)
-        self.button_find.setEnabled(True)
-        self.gibrid = False
-        self.sputnik = False
-        self.map_is_visible = False
-        self.width = self.longitude = 0
-        self.scale_user = 1
-        self.map_image()
+        pass
 
 
 def error_window(text):
@@ -145,4 +127,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = Main_Window()
     window.show()
+    window.photo_label.setFocus()
     sys.exit(app.exec())
