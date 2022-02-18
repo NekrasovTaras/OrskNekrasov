@@ -7,6 +7,7 @@ from PyQt5.QtCore import Qt
 import requests
 import os
 from Samples.geocoder import get_ll_span, get_nearest_object
+from Samples.business import find_business, find_businesses
 
 
 class Main_Window(QMainWindow):
@@ -81,9 +82,12 @@ class Main_Window(QMainWindow):
         pixmap = QPixmap(map_file)
         self.photo_label.setPixmap(pixmap)
 
-    def mark_from_click(self, mark_ll):
+    def mark_from_click(self, mark_ll, org=False):
         self.point_param = f"pt={mark_ll[0]}"
-        self.point_param += f",{mark_ll[1]},pm2blm"
+        if org:
+            self.point_param += f",{mark_ll[1]},pm2rdm"
+        else:
+            self.point_param += f",{mark_ll[1]},pm2blm"
         self.map_request = f"http://static-maps.yandex.ru/1.x/?{self.ll_spn}&l={self.map_type[-1]}&&size=650,450"
         self.map_request += "&" + self.point_param
         print(self.map_request)
@@ -157,21 +161,33 @@ class Main_Window(QMainWindow):
                 f"https://static-maps.yandex.ru/1.x/?ll={f'{self.coordinates[0]},{self.coordinates[1]}'}&spn={f'{self.spn[0]},{self.spn[1]}'}&l={self.map_type[-1]}&size=650,450&{self.point_param}")
 
     def mousePressEvent(self, event):
+        self.adress_label.clear()
         x = event.x()
         y = event.y()
         if 500 <= x <= 1150 and 110 <= y <= 560:
             x -= 500
             y -= 110
-            new_x = (x - 325) * self.spn[0] * 1.5 / 325
+            new_x = (x - 320) * self.spn[0] * 1.5 / 320
             new_y = (y - 225) * self.spn[0] * 0.58 / 225
             new_pt_ll = [self.coordinates[0] + new_x, self.coordinates[1] - new_y]
-            self.mark_from_click(new_pt_ll)
+            if event.button() == Qt.LeftButton:
+                self.mark_from_click(new_pt_ll)
+            elif event.button() == Qt.RightButton:
+                organization = find_business(f"{new_pt_ll[0]},{new_pt_ll[1]}", "0.00000005,0.00000005", "organization")
+                try:
+                    point = organization["geometry"]["coordinates"]
+                    org_lat = float(point[0])
+                    org_lon = float(point[1])
+                    point_param = [org_lat, org_lon]
+                    self.mark_from_click(point_param, org=True)
+                except Exception:
+                    self.adress_label.setText('Нет организаций поблизности')
+
 
     def reset(self):
         self.mark_on = False
         self.adress_label.setText("")
         self.point_param = ''
-
 
 
 def error_window(text):

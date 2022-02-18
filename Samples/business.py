@@ -16,6 +16,7 @@ def find_businesses(ll, spn, request, locale="ru_RU"):
     }
 
     response = requests.get(search_api_server, params=search_params)
+    print(response)
     if not response:
         raise RuntimeError(
             f"""Ошибка выполнения запроса:
